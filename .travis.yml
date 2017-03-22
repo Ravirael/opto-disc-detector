@@ -6,7 +6,6 @@ compiler:
   - gcc
 
 install:
-  - ls /bin | grep g++
   - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
 
 addons:
