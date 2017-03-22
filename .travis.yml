@@ -12,11 +12,11 @@ addons:
       - cmake-data
       - libopencv-dev
       - libboost-all-dev
-      
+
 before_script:
   - mkdir build
   - cd build
-  - ../cmake-3.7.2-Linux-x86_64.sh ..
+  - cmake ..
 
 script:
   - make all
