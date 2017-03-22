@@ -41,18 +41,40 @@ TEST_CASE("command line arguments can be parsed", "[CommandLineArgumentsParser]"
     SECTION("parsing command line argument with correct -i option") {
         ToArgvConverter converter({"program","-i",filePath});
         CommandLineArgumentsParser parser(converter.argc(), converter.argv());
-        CHECK(filePath == parser.parse()->inputFilePath());
+        auto args = parser.parse();
+        CHECK(filePath == args->inputFilePath());
+        CHECK_FALSE(args->debug());
     }
 
     SECTION("parsing command line argument with correct --input option") {
         ToArgvConverter converter({"program","--input",filePath});
         CommandLineArgumentsParser parser(converter.argc(), converter.argv());
-        CHECK(filePath == parser.parse()->inputFilePath());
+        auto args = parser.parse();
+        CHECK(filePath == args->inputFilePath());
+        CHECK_FALSE(args->debug());
     }
 
     SECTION("parsing command line argument with correct --input= option") {
         ToArgvConverter converter({"program","--input="+filePath});
         CommandLineArgumentsParser parser(converter.argc(), converter.argv());
-        CHECK(filePath == parser.parse()->inputFilePath());
+        auto args = parser.parse();
+        CHECK(filePath == args->inputFilePath());
+        CHECK_FALSE(args->debug());
+    }
+
+    SECTION("parsing command line argument with --debug option") {
+        ToArgvConverter converter({"program","--debug","--input",filePath});
+        CommandLineArgumentsParser parser(converter.argc(), converter.argv());
+        auto args = parser.parse();
+        CHECK(filePath == args->inputFilePath());
+        CHECK(args->debug());
+    }
+
+    SECTION("parsing command line argument with -d option") {
+        ToArgvConverter converter({"program","--input",filePath,"-d"});
+        CommandLineArgumentsParser parser(converter.argc(), converter.argv());
+        auto args = parser.parse();
+        CHECK(filePath == args->inputFilePath());
+        CHECK(args->debug());
     }
 }
