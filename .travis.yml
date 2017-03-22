@@ -18,8 +18,10 @@ addons:
 before_script:
   - mkdir build
   - cd build
+  - export CXX=g++-6
   - cmake ..
 
 script:
+  - export CXX=g++-6
   - make all
   - ./optic-disc-detector-test
