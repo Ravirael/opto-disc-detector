@@ -18,6 +18,9 @@ addons:
       - cmake
       - cmake-data
       - libopencv-dev
+      - libopencv-core-dev
+      - libopencv-highgui-dev
+      - libopencv-imgproc-dev
       - libboost-all-dev
 
 before_script:
