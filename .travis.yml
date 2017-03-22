@@ -7,6 +7,7 @@ compiler:
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
+  - export CPLUS_INCLUDE_PATH=/usr/local/include
 
 addons:
   apt:
