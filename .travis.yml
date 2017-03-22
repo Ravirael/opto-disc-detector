@@ -3,7 +3,11 @@ dist: trusty
 language: cpp
 
 compiler:
-  - g++5
+  - gcc
+
+install:
+  - ls /bin | grep g++
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
 
 addons:
   apt:
@@ -11,7 +15,7 @@ addons:
       - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
       - ubuntu-toolchain-r-test
     packages:
-      - g++-5
+      - g++-6
       - cmake
       - cmake-data
       - libopencv-dev
