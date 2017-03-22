@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.0)
 project(optic-disc-detector VERSION 0.0.0)
 
 set(CMAKE_CXX_STANDARD 14)
