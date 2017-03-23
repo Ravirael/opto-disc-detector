@@ -7,6 +7,9 @@
 #include "HoughTransform/CirclesConverter.h"
 #include "DefaultStageFactory.h"
 #include "EdgeDetecion/EdgeDetectionStage.h"
+#include "PreProcessing/ToGrayscaleStage.h"
+#include "PreProcessing/ThresholdingStage.h"
+#include "PreProcessing/MorphologicalStage.h"
 
 template <typename StageFactory = DefaultStageFactory>
 class BasicOpticDiscDetectorFactory final: public OpticDiscDetectorFactory {
@@ -20,8 +23,9 @@ public:
     }
 
     std::unique_ptr<OpticDiscDetector> createDetector() const override {
-        return create<PreProcessingStage>()
-               | create<EdgeDetectionStage>()
+        return create<ToGrayscaleStage>()
+               | create<ThresholdingStage>()
+               | create<MorphologicalStage>()
                | create<HoughTransformStage>()
                | create<CirclesConverter>();
     }
