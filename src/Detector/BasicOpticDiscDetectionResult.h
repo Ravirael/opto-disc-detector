@@ -8,7 +8,7 @@ class BasicOpticDiscDetectionResult final: public OpticDiscDetectionResult {
 public:
     BasicOpticDiscDetectionResult(std::vector<Circle<int>> circles);
     std::vector<Circle<int>> all() const override;
-    Circle<int> best() const override;
+    boost::optional<Circle<int>> best() const override;
 
 };
 

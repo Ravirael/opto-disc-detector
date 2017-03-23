@@ -49,9 +49,9 @@ namespace {
 
 cv::Mat EdgeDetectionStage::operator()(cv::Mat img) const {
     cv::Mat mat = img.clone();
-    //cv::Canny(img, mat, 6, 24);
-    cv::Laplacian( img, mat, CV_16S, 1, 1, 0);
-    cv::convertScaleAbs(mat, mat);
+    cv::Canny(img, mat, 50, 100);
+    //cv::Laplacian( img, mat, CV_16S, 1, 1, 0);
+    //cv::convertScaleAbs(mat, mat);
     return mat;
 }
 
