@@ -1,4 +1,4 @@
-#include "CannyEdgeDetectionStage.h"
+#include "EdgeDetectionStage.h"
 #include <opencv2/imgproc.hpp>
 
 namespace {
@@ -47,14 +47,11 @@ namespace {
     }
 }
 
-cv::Mat CannyEdgeDetectionStage::operator()(cv::Mat img) const {
+cv::Mat EdgeDetectionStage::operator()(cv::Mat img) const {
     cv::Mat mat = img.clone();
-    cv::GaussianBlur(mat, mat, {5, 5}, 1.25f);
-
-    autoBrightnessContrast(mat, mat, 0.f);
-
-    //cv::Canny(mat, mat, 6, 24);
-    cv::adaptiveThreshold(mat, mat, 255, CV_ADAPTIVE_THRESH_GAUSSIAN_C, CV_THRESH_BINARY, 21, 3);
+    //cv::Canny(img, mat, 6, 24);
+    cv::Laplacian( img, mat, CV_16S, 1, 1, 0);
+    cv::convertScaleAbs(mat, mat);
     return mat;
 }
 

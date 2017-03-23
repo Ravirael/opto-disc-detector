@@ -3,7 +3,7 @@
 
 #include "OpticDiscDetectionResult.h"
 
-class BasicOpticDiscDetectionResult : public OpticDiscDetectionResult {
+class BasicOpticDiscDetectionResult final: public OpticDiscDetectionResult {
     const std::vector<Circle<int>> mCircles;
 public:
     BasicOpticDiscDetectionResult(std::vector<Circle<int>> circles);

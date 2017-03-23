@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-class DefaultStageFactory {
+class DefaultStageFactory final {
 public:
     template <typename T, typename ...Args>
     std::unique_ptr<T> create(Args && ... args) const {

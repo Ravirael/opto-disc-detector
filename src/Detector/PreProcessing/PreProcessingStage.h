@@ -1,8 +1,7 @@
 #pragma once
-
 #include "../ImageProcessingStage.h"
 
-class CannyEdgeDetectionStage : public ImageProcessingStage {
+class PreProcessingStage final: public ImageProcessingStage {
 public:
     cv::Mat operator()(cv::Mat inputImage) const override;
 };

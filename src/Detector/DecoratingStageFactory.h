@@ -3,7 +3,7 @@
 #include <memory>
 
 template <typename DecoratorStage>
-class DecoratingStageFactory {
+class DecoratingStageFactory final {
 public:
     template <
             typename T, typename ...Args,
