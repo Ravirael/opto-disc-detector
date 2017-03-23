@@ -5,7 +5,7 @@
 #include <mutex>
 #include "ProcessingStageDecorator.h"
 
-class DisplayingDecorator : public ProcessingStageDecorator<cv::Mat> {
+class DisplayingDecorator final: public ProcessingStageDecorator<cv::Mat> {
     const std::string mWindowName{"Window"};
 public:
     using ProcessingStageDecorator<cv::Mat>::ProcessingStageDecorator;

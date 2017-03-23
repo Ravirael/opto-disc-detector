@@ -2,13 +2,14 @@
 
 #include "OpticDiscDetectorFactory.h"
 #include "ProcessingStageComposite.h"
-#include "PreProcessing/BasicPreProcessingStage.h"
+#include "PreProcessing/PreProcessingStage.h"
 #include "HoughTransform/HoughTransformStage.h"
 #include "HoughTransform/CirclesConverter.h"
 #include "DefaultStageFactory.h"
+#include "EdgeDetecion/EdgeDetectionStage.h"
 
 template <typename StageFactory = DefaultStageFactory>
-class BasicOpticDiscDetectorFactory : public OpticDiscDetectorFactory {
+class BasicOpticDiscDetectorFactory final: public OpticDiscDetectorFactory {
     const StageFactory mStageFactory;
 
 public:
@@ -19,8 +20,15 @@ public:
     }
 
     std::unique_ptr<OpticDiscDetector> createDetector() const override {
-        return mStageFactory.template create<BasicPreProcessingStage>()
-                | mStageFactory.template create<HoughTransformStage>()
-                | mStageFactory.template create<CirclesConverter>();
+        return create<PreProcessingStage>()
+               | create<EdgeDetectionStage>()
+               | create<HoughTransformStage>()
+               | create<CirclesConverter>();
+    }
+
+private:
+    template <typename T, typename ... Args>
+    auto create(Args && ... args) const {
+        return mStageFactory.template create<T>(std::forward<Args>(args)...);
     }
 };

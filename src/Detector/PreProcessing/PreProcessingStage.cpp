@@ -1,7 +1,7 @@
-#include "BasicPreProcessingStage.h"
+#include "PreProcessingStage.h"
 #include <opencv2/imgproc.hpp>
 
-cv::Mat BasicPreProcessingStage::operator()(cv::Mat input) const {
+cv::Mat PreProcessingStage::operator()(cv::Mat input) const {
     cv::Mat output;
 
     if (input.type() != CV_8UC1) {
