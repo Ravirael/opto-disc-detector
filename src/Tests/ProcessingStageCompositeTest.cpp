@@ -26,4 +26,19 @@ TEST_CASE("processing stages can be composed", "[ProcessingStageComposite]") {
 
         CHECK(testCase * 2 ==  (*composite)(testCase));
     }
+
+    SECTION("composing two stages via operator|") {
+        const int testCase = 4;
+        auto composite = std::make_unique<TwofoldToString>() | std::make_unique<StringToInt>();
+        CHECK(testCase * 2 ==  (*composite)(testCase));
+    }
+
+    SECTION("composing four stages via operator|") {
+        const int testCase = 4;
+        auto composite = std::make_unique<TwofoldToString>()
+                         | std::make_unique<StringToInt>()
+                         | std::make_unique<TwofoldToString>()
+                         | std::make_unique<StringToInt>();
+        CHECK(testCase * 4 ==  (*composite)(testCase));
+    }
 }
