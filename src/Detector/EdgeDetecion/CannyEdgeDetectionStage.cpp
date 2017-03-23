@@ -50,17 +50,11 @@ namespace {
 cv::Mat CannyEdgeDetectionStage::operator()(cv::Mat img) const {
     cv::Mat mat = img.clone();
     cv::GaussianBlur(mat, mat, {5, 5}, 1.25f);
-    mProgressSignal("Blur", mat);
 
     autoBrightnessContrast(mat, mat, 0.f);
-    mProgressSignal("Contrast", mat);
 
     //cv::Canny(mat, mat, 6, 24);
     cv::adaptiveThreshold(mat, mat, 255, CV_ADAPTIVE_THRESH_GAUSSIAN_C, CV_THRESH_BINARY, 21, 3);
-    mProgressSignal("Canny", mat);
     return mat;
 }
 
-boost::signals2::connection CannyEdgeDetectionStage::connect(std::function<void(std::string, const cv::Mat)> slot) {
-    return mProgressSignal.connect(std::move(slot));
-}

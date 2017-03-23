@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <boost/optional.hpp>
-#include "../Geometry/Circle.h"
+#include "../Detector/Geometry/Circle.h"
 
 class ProgramArguments {
 
