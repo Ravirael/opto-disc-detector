@@ -22,3 +22,11 @@ public:
         return (*mSecond)((*mFirst)(arg));
     }
 };
+
+//Sick but works!
+template <typename First, typename Second,
+        typename Argument = typename First::Argument, typename SubResult = typename First::Result, typename Result = typename Second::Result>
+std::unique_ptr<ProcessingStageComposite<Argument, SubResult, Result>>
+operator|(std::unique_ptr<First> &&lhs, std::unique_ptr<Second> &&rhs) {
+    return std::make_unique<ProcessingStageComposite<Argument, SubResult, Result>>(std::move(lhs), std::move(rhs));
+};
