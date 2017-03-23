@@ -1,9 +1,11 @@
 #include "ConstProgramArguments.h"
 
 ConstProgramArguments::ConstProgramArguments(const std::string &inputFilePath,
-                                             const boost::optional<Circle> &expectedResult) :
+                                             const bool debug,
+                                             const boost::optional<Circle<int>> &expectedResult) :
         mInputFilePath(inputFilePath),
-        mExpectedResult(expectedResult) {
+        mExpectedResult(expectedResult),
+        mDebug(debug) {
 
 }
 
@@ -11,6 +13,10 @@ std::string ConstProgramArguments::inputFilePath() const {
     return mInputFilePath;
 }
 
-boost::optional<Circle> ConstProgramArguments::expectedResult() const {
+boost::optional<Circle<int>> ConstProgramArguments::expectedResult() const {
     return mExpectedResult;
+}
+
+bool ConstProgramArguments::debug() const {
+    return mDebug;
 }

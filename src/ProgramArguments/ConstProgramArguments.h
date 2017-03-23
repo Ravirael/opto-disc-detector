@@ -5,12 +5,15 @@
 
 class ConstProgramArguments : public ProgramArguments {
     const std::string mInputFilePath;
-    const boost::optional<Circle> mExpectedResult;
+    const bool mDebug;
+    const boost::optional<Circle<int>> mExpectedResult;
 
 public:
-    ConstProgramArguments(const std::string &inputFilePath, const boost::optional<Circle> &expectedResult);
+    ConstProgramArguments(const std::string &inputFilePath, const bool debug,
+                              const boost::optional<Circle<int>> &expectedResult);
     std::string inputFilePath() const override;
-    boost::optional<Circle> expectedResult() const override;
+    bool debug() const override;
+    boost::optional<Circle<int>> expectedResult() const override;
 };
 
 

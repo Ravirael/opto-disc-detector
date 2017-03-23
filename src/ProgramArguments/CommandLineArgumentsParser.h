@@ -1,18 +1,17 @@
 #pragma once
 #include "ProgramArgumentsParser.h"
 #include "ConstProgramArguments.h"
-#include <cxxopts.hpp>
+#include <boost/program_options/options_description.hpp>
 
 class CommandLineArgumentsParser : public ProgramArgumentsParser {
-    using Argv = char **;
+    using Argv = const char * const *;
     const int mArgc;
     const Argv mArgv;
-    cxxopts::Options mOptions;
 public:
     CommandLineArgumentsParser(const int argc, Argv argv);
     std::unique_ptr<ProgramArguments> parse() const override;
 private:
-    cxxopts::Options createCxxOpts() const;
+    boost::program_options::options_description createOptionsDescription() const;
 };
 
 
