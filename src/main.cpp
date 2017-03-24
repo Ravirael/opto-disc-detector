@@ -1,6 +1,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <iostream>
 #include "ProgramArguments/CommandLineArgumentsParser.h"
+#include "ProgramArguments/ParsedProgramArguments.h"
 #include "Detector/BasicOpticDiscDetectorFactory.h"
 #include "Detector/DefaultStageFactory.h"
 #include "Detector/EmptyProcessingStageDecorator.h"
@@ -9,13 +10,13 @@
 #include "Detector/DetectionResultRendered.h"
 
 int main(int argc, char** argv) {
-    CommandLineArgumentsParser parser(argc, argv);
-    auto options = parser.parse();
+    ParsedProgramArguments options(
+        CommandLineArgumentsParser(argc, argv));
 
-    cv::Mat input = cv::imread(options->inputFilePath());
+    cv::Mat input = cv::imread(options.inputFilePath());
     std::unique_ptr<OpticDiscDetectorFactory> detectorFactory;
 
-    if (options->debug()) {
+    if (options.debug()) {
         detectorFactory = std::make_unique<BasicOpticDiscDetectorFactory<DecoratingStageFactory<DisplayingDecorator>>>();
     } else {
         detectorFactory = std::make_unique<BasicOpticDiscDetectorFactory<>>();
@@ -23,7 +24,7 @@ int main(int argc, char** argv) {
 
     auto result = detectorFactory->createDetector()->operator()(input);
 
-    if (options->debug()) {
+    if (options.debug()) {
         DisplayingDecorator(std::make_unique<DetectionResultRendered>(result.get()))(input);
     }
 
