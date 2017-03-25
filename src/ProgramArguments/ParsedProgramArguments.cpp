@@ -2,20 +2,20 @@
 #include "ProgramArgumentsParser.h"
 
 ParsedProgramArguments::ParsedProgramArguments(
-    const ProgramArgumentsParser &argumentsParser) 
-  : mArgumentsParser(argumentsParser) {
+    std::unique_ptr< const ProgramArgumentsParser > &&argumentsParser) 
+  : mArgumentsParser(std::move(argumentsParser)) {
   
 }
 
 std::string ParsedProgramArguments::inputFilePath() const{
-  return mArgumentsParser.parse()->inputFilePath(); 
+  return mArgumentsParser->parse()->inputFilePath(); 
 }
 
 boost::optional<Circle<int>> ParsedProgramArguments::expectedResult() const{
-  return mArgumentsParser.parse()->expectedResult(); 
+  return mArgumentsParser->parse()->expectedResult(); 
 }
 
 bool ParsedProgramArguments::debug() const{
-  return mArgumentsParser.parse()->debug(); 
+  return mArgumentsParser->parse()->debug(); 
 }
 

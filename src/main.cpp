@@ -11,7 +11,7 @@
 
 int main(int argc, char** argv) {
     ParsedProgramArguments options(
-        CommandLineArgumentsParser(argc, argv));
+        std::make_unique<CommandLineArgumentsParser>(argc, argv));
 
     cv::Mat input = cv::imread(options.inputFilePath());
     std::unique_ptr<OpticDiscDetectorFactory> detectorFactory;
