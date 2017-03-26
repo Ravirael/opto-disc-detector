@@ -1,8 +1,8 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
-#include "ToGrayscaleStage.h"
+#include "ToGrayscale.h"
 
-cv::Mat ToGrayscaleStage::operator()(cv::Mat input) const {
+cv::Mat ToGrayscale::operator()(cv::Mat input) const {
     if (input.type() == CV_8UC3) {
         cv::Mat output;
         std::vector<cv::Mat> channels;
@@ -13,5 +13,5 @@ cv::Mat ToGrayscaleStage::operator()(cv::Mat input) const {
     } else if (input.type() == CV_8UC1) {
         return input;
     }
-    throw std::invalid_argument("In ToGrayscaleStage expected BGR or grayscale image as input!");
+    throw std::invalid_argument("In ToGrayscale expected BGR or grayscale image as input!");
 }

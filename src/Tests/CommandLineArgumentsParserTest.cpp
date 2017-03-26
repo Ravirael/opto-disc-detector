@@ -1,5 +1,6 @@
 #include <catch.hpp>
 #include "../ProgramArguments/CommandLineArgumentsParser.h"
+#include "../ProgramArguments/ProgramArguments.h"
 #include <cstring>
 
 namespace {

@@ -11,5 +11,5 @@ Do **not** confuse with *optical disc*!
 ```bash
 optic-disc-detector -i /path/to/image.jpg
 optic-disc-detector --input /path/to/image.jpg
-optic-disc-detector -input=/path/to/image.jpg
+optic-disc-detector --input=/path/to/image.jpg
 ```

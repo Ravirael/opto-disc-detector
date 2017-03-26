@@ -1,6 +1,5 @@
 #pragma once
 #include "ProgramArgumentsParser.h"
-#include "ConstProgramArguments.h"
 #include <boost/program_options/options_description.hpp>
 
 class CommandLineArgumentsParser : public ProgramArgumentsParser {
