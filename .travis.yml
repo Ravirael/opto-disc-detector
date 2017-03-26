@@ -56,9 +56,9 @@ before_script:
   - mkdir build
   - cd build
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER ..
-  - wget -o test.jpg https://upload.wikimedia.org/wikipedia/commons/3/37/Fundus_photograph_of_normal_right_eye.jpg
+  - wget https://upload.wikimedia.org/wikipedia/commons/3/37/Fundus_photograph_of_normal_right_eye.jpg
 
 script:
   - make all
   - ./optic-disc-detector-test
-  - ./optic-disc-detector -i test.jpg
+  - ./optic-disc-detector -i Fundus_photograph_of_normal_right_eye.jpg
