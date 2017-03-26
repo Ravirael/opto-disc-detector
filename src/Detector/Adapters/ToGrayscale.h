@@ -3,7 +3,7 @@
 
 #include "../ImageProcessingStage.h"
 
-class ToGrayscaleStage final : public ImageProcessingStage {
+class ToGrayscale final : public ImageProcessingStage {
 public:
     cv::Mat operator()(cv::Mat arg) const override;
 };
