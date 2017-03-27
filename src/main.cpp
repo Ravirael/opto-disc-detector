@@ -1,5 +1,6 @@
 #include <opencv2/imgcodecs.hpp>
 #include <iostream>
+#include <json.hpp>
 #include "ProgramArguments/CommandLineArgumentsParser.h"
 #include "ProgramArguments/ParsedProgramArguments.h"
 #include "Detector/BasicOpticDiscDetectorFactory.h"
@@ -28,13 +29,22 @@ int main(int argc, char** argv) {
         DisplayingDecorator(std::make_unique<DetectionResultRendered>(result.get()))(input);
     }
 
-    auto allCircles = result->all();
+    const auto allCircles = result->all();
+    const auto bestCircle = result->best();
 
-    std::cout << "[\n";
-    for (const auto &circle : allCircles) {
-        std::cout << "{x: " << circle.center().x() << ", y: " << circle.center().y() << ", radius: " << circle.radius() << "},\n";
+    if (bestCircle) {
+        std::cout <<
+                  nlohmann::json::object({
+                    {"center", {{"x", bestCircle->center().x()}, {"y", bestCircle->center().y()}}},
+                    {"radius", bestCircle->radius()}
+                  });
+        if (options.outputFilePath()) {
+            cv::imwrite(options.outputFilePath().get(), DetectionResultRendered(result.get())(input));
+        }
+    } else {
+        std::cout << nlohmann::json::object();
     }
-    std::cout << "\n]";
+
 
     return 0;
 }

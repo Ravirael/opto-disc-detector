@@ -19,3 +19,7 @@ bool ParsedProgramArguments::debug() const{
   return mArgumentsParser->parse()->debug(); 
 }
 
+boost::optional<std::string> ParsedProgramArguments::outputFilePath() const {
+    return mArgumentsParser->parse()->outputFilePath();
+}
+

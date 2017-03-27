@@ -14,7 +14,15 @@ boost::program_options::options_description CommandLineArgumentsParser::createOp
 
     options.add_options()
             ("debug,d", "Display steps")
-            ("input,i", boost::program_options::value<std::string>()->required(), "Input image");
+            ("input,i", boost::program_options::value<std::string>()->required(), "Input image")
+            ("output,o", boost::program_options::value<std::string>(), "Output image")
+            ("minRadius",
+             boost::program_options::value<double>()->default_value(0.045),
+             "Minium radius (percent of image width)")
+            ("maxRadius",
+             boost::program_options::value<double>()->default_value(0.065),
+             "Maximum radius (percent of image width)")
+                    ("cannyThreshold", boost::program_options::value<unsigned>()->default_value(80), "Upper threshold of Canny filter" );
 
     return options;
 }
@@ -27,8 +35,10 @@ std::unique_ptr<ProgramArguments> CommandLineArgumentsParser::parse() const {
               vm);
 
 
-    auto filePath = vm["input"].as<std::string>();
-    auto debug = vm.count("debug");
+    auto inputFilePath = vm["input"].as<std::string>();
+    auto outputFilePath = (vm.count("output") ?
+                           boost::optional<std::string>(vm["output"].as<std::string>()) :
+                           boost::optional<std::string>());
 
-    return std::make_unique<ConstProgramArguments>(filePath, vm.count("debug") > 0, boost::optional<Circle<int>>());
+    return std::make_unique<ConstProgramArguments>(inputFilePath, std::move(outputFilePath), vm.count("debug"), boost::optional<Circle<int>>());
 }

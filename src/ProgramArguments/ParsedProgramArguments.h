@@ -12,6 +12,7 @@ public:
         std::unique_ptr< const ProgramArgumentsParser > &&argumentsParser);
     std::string inputFilePath() const override;
     boost::optional<Circle<int>> expectedResult() const override;
+    boost::optional<std::string> outputFilePath() const override;
     bool debug() const override;
 };
 

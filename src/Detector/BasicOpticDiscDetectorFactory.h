@@ -8,11 +8,14 @@
 #include "DefaultStageFactory.h"
 #include "EdgeDetecion/EdgeDetectionStage.h"
 #include "Adapters/ToGrayscale.h"
-#include "PreProcessing/ThresholdingStage.h"
+#include "Adapters/GlobalThreshold.h"
 #include "PreProcessing/MorphologicalStage.h"
 #include "Adapters/HistogramEqualization.h"
 #include "Adapters/ChannelSelection.h"
 #include "Adapters/PresetCirclesHoughTransformParameters.h"
+#include "Adapters/Canny.h"
+#include "Adapters/MinMaxNormalize.h"
+#include "Adapters/GaussianBlur.h"
 
 template <typename StageFactory = DefaultStageFactory>
 class BasicOpticDiscDetectorFactory final: public OpticDiscDetectorFactory {
@@ -27,17 +30,16 @@ public:
 
     std::unique_ptr<OpticDiscDetector> createDetector() const override {
         return create<ChannelSelection>(ChannelSelection::R)
+               | create<GaussianBlur>(0.05, 10.0)
                | create<HistogramEqualization>()
-               | create<ToGrayscale>()
-               | create<ThresholdingStage>()
-               | create<MorphologicalStage>()
+               | create<MinMaxNormalize>(16)
                | create<CirclesHoughTransform>(
                 PresetCirclesHoughTransformParametersBuilder()
-                            .setUpperCannyThreshold(100)
-                            .setRelativeMinRadius(0.04)
-                            .setRelativeMaxRadius(0.07)
-                            .setRelativeMinDistance(0.02)
-                            .setAccumulatorThreshold(10)
+                            .setUpperCannyThreshold(80)
+                            .setRelativeMinRadius(0.045)
+                            .setRelativeMaxRadius(0.065)
+                            .setRelativeMinDistance(0.14)
+                            .setAccumulatorThreshold(4)
                             .build()
                 )
                | create<CirclesConverter>();
