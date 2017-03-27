@@ -1,6 +1,6 @@
 #include <opencv2/imgproc.hpp>
 #include "CirclesHoughTransform.h"
-#include "CirclesHoughTransformParameters.h"
+#include "../HoughTransform/CirclesHoughTransformParameters.h"
 
 CirclesHoughTransform::CirclesHoughTransform(std::unique_ptr<CirclesHoughTransformParameters> &&parameters) :
         mParameters(std::move(parameters)) {

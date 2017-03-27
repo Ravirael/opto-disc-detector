@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
         detectorFactory = std::make_unique<BasicOpticDiscDetectorFactory<>>();
     }
 
-    auto result = detectorFactory->createDetector()->operator()(input);
+    const auto result = (*detectorFactory->createDetector())(input);
 
     if (options.debug()) {
         DisplayingDecorator(std::make_unique<DetectionResultRendered>(result.get()))(input);
@@ -33,11 +33,7 @@ int main(int argc, char** argv) {
     const auto bestCircle = result->best();
 
     if (bestCircle) {
-        std::cout <<
-                  nlohmann::json::object({
-                    {"center", {{"x", bestCircle->center().x()}, {"y", bestCircle->center().y()}}},
-                    {"radius", bestCircle->radius()}
-                  });
+        std::cout << nlohmann::json(bestCircle.get());
         if (options.outputFilePath()) {
             cv::imwrite(options.outputFilePath().get(), DetectionResultRendered(result.get())(input));
         }

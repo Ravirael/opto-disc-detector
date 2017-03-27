@@ -9,7 +9,17 @@ Do **not** confuse with *optical disc*!
 
 ## Usage
 ```bash
-optic-disc-detector -i /path/to/image.jpg
-optic-disc-detector --input /path/to/image.jpg
-optic-disc-detector --input=/path/to/image.jpg
+optic-disc-detector -i /path/to/input.jpg
+optic-disc-detector --input /path/to/input.jpg
+optic-disc-detector --input=/path/to/input.jpg
+optic-disc-detector -i /path/to/input.jpg -o /path/to/output.jpg
+optic-disc-detector --input=/path/to/input.jpg --output=/path/to/output.jpg
+```
+
+## Output
+Circle is output in JSON format
+
+### Example
+```json
+{"center":{"x":868,"y":1171},"radius":169}
 ```

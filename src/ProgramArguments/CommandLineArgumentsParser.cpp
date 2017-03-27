@@ -14,15 +14,9 @@ boost::program_options::options_description CommandLineArgumentsParser::createOp
 
     options.add_options()
             ("debug,d", "Display steps")
-            ("input,i", boost::program_options::value<std::string>()->required(), "Input image")
-            ("output,o", boost::program_options::value<std::string>(), "Output image")
-            ("minRadius",
-             boost::program_options::value<double>()->default_value(0.045),
-             "Minium radius (percent of image width)")
-            ("maxRadius",
-             boost::program_options::value<double>()->default_value(0.065),
-             "Maximum radius (percent of image width)")
-                    ("cannyThreshold", boost::program_options::value<unsigned>()->default_value(80), "Upper threshold of Canny filter" );
+            ("input,i", boost::program_options::value<std::string>()->required(), "Input image file path")
+            ("output,o", boost::program_options::value<std::string>(), "Output image file path")
+            ("help,h", "Display help message");
 
     return options;
 }

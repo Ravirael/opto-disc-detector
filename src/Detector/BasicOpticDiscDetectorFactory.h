@@ -12,7 +12,7 @@
 #include "PreProcessing/MorphologicalStage.h"
 #include "Adapters/HistogramEqualization.h"
 #include "Adapters/ChannelSelection.h"
-#include "Adapters/PresetCirclesHoughTransformParameters.h"
+#include "HoughTransform/PresetCirclesHoughTransformParametersBuilder.h"
 #include "Adapters/Canny.h"
 #include "Adapters/MinMaxNormalize.h"
 #include "Adapters/GaussianBlur.h"

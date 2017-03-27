@@ -7,22 +7,23 @@ DetectionResultRendered::DetectionResultRendered(OpticDiscDetectionResult *resul
 }
 
 cv::Mat DetectionResultRendered::operator()(cv::Mat image) const {
+    const auto thickness = 2;
     const auto circles = mResult->all();
     for(const auto &circle : circles)
     {
         const cv::Point center(circle.center().x(), circle.center().y());
         const int radius = circle.radius();
         // circle center
-        cv::circle(image, center, 2, cv::Scalar(0, 255, 0), -1, 8, 0 );
+        cv::circle(image, center, 2, cv::Scalar(0, 255, 0), -1);
         // circle outline
-        cv::circle(image, center, radius, cv::Scalar(255, 0, 0), 1, 8, 0 );
+        cv::circle(image, center, radius, cv::Scalar(255, 0, 0), thickness);
     }
 
     if (mResult->best()) {
         auto circle = mResult->best().get();
         const cv::Point center(circle.center().x(), circle.center().y());
         const int radius = circle.radius();
-        cv::circle(image, center, radius, cv::Scalar(255, 255, 0), 1, 8, 0);
+        cv::circle(image, center, radius, cv::Scalar(255, 255, 0), thickness);
     }
 
     return image;
