@@ -8,7 +8,7 @@ GaussianBlur::GaussianBlur(const double size, const double sigma) noexcept:
 }
 
 cv::Mat GaussianBlur::operator()(cv::Mat input) const {
-    const int size = mSize * input.cols;
+    const int size = static_cast<int>((mSize * input.cols)/2) * 2 + 1; //have to be odd
     cv::Mat output;
     cv::GaussianBlur(input, output, cv::Size(size, size), mSigma);
     return output;

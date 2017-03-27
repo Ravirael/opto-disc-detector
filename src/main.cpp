@@ -38,6 +38,9 @@ int main(int argc, char** argv) {
                     {"center", {{"x", bestCircle->center().x()}, {"y", bestCircle->center().y()}}},
                     {"radius", bestCircle->radius()}
                   });
+        if (options.outputFilePath()) {
+            cv::imwrite(options.outputFilePath().get(), DetectionResultRendered(result.get())(input));
+        }
     } else {
         std::cout << nlohmann::json::object();
     }
