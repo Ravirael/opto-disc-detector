@@ -30,7 +30,7 @@ public:
 
     std::unique_ptr<OpticDiscDetector> createDetector() const override {
         return create<ChannelSelection>(ChannelSelection::R)
-               | create<GaussianBlur>(0.05, 2.0)
+               | create<GaussianBlur>(0.05, 10.0)
                | create<HistogramEqualization>()
                | create<MinMaxNormalize>(16)
                | create<CirclesHoughTransform>(
