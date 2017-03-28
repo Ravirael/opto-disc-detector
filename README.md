@@ -39,5 +39,23 @@ Circle is output in JSON format
 
 ### Example
 ```json
-{"center":{"x":868,"y":1171},"radius":169}
+{
+   "circle":{
+      "center":{
+         "x":868,
+         "y":1171
+      },
+      "radius":169
+   },
+   "statistics":{
+      "positive":100,
+      "negative":1231,
+      "truePositive":60,
+      "trueNegative":1200,
+      "falsePositive":40,
+      "falseNegative":31,
+      "sensitivity":0.6,
+      "specificity":0.9
+   }
+}
 ```
