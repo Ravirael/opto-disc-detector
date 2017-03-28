@@ -12,7 +12,7 @@
 #include "PreProcessing/MorphologicalStage.h"
 #include "Adapters/HistogramEqualization.h"
 #include "Adapters/ChannelSelection.h"
-#include "HoughTransform/PresetCirclesHoughTransformParametersBuilder.h"
+#include "HoughTransform/PresetHoughParametersFactory.h"
 #include "Adapters/Canny.h"
 #include "Adapters/MinMaxNormalize.h"
 #include "Adapters/GaussianBlur.h"
@@ -20,11 +20,13 @@
 template <typename StageFactory = DefaultStageFactory>
 class BasicOpticDiscDetectorFactory final: public OpticDiscDetectorFactory {
     const StageFactory mStageFactory;
+    const std::unique_ptr<HoughParametersFactory> mHoughParametersFactory;
 
 public:
     template <typename ... Args>
-    BasicOpticDiscDetectorFactory(Args && ... args) :
-            mStageFactory(std::forward<Args>(args)...) {
+    BasicOpticDiscDetectorFactory(std::unique_ptr<HoughParametersFactory> houghParametersFactory, Args && ... args) :
+            mStageFactory(std::forward<Args>(args)...),
+            mHoughParametersFactory(std::move(houghParametersFactory)) {
 
     }
 
@@ -33,15 +35,7 @@ public:
                | create<GaussianBlur>(0.05, 10.0)
                | create<HistogramEqualization>()
                | create<MinMaxNormalize>(16)
-               | create<CirclesHoughTransform>(
-                PresetCirclesHoughTransformParametersBuilder()
-                            .setUpperCannyThreshold(80)
-                            .setRelativeMinRadius(0.045)
-                            .setRelativeMaxRadius(0.065)
-                            .setRelativeMinDistance(0.14)
-                            .setAccumulatorThreshold(4)
-                            .build()
-                )
+               | create<CirclesHoughTransform>(mHoughParametersFactory->create())
                | create<CirclesConverter>();
     }
 

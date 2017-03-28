@@ -2,7 +2,7 @@
 
 #include <opencv2/core/mat.hpp>
 
-class CirclesHoughTransformParameters {
+class HoughParameters {
 public:
     virtual double accumulatorResolutionRatio(const cv::Mat &input) const = 0;
     virtual double minDistance(const cv::Mat &input) const = 0;
@@ -10,7 +10,7 @@ public:
     virtual double minRadius(const cv::Mat &input) const = 0;
     virtual double maxRadius(const cv::Mat &input) const = 0;
     virtual unsigned accumulatorThreshold(const cv::Mat &input) const = 0;
-    virtual ~CirclesHoughTransformParameters() noexcept;
+    virtual ~HoughParameters() noexcept;
 };
 
 
