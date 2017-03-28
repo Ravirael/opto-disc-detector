@@ -1,5 +1,7 @@
 #pragma once
 
+#include <json.hpp>
+
 template <typename T>
 class Point {
     const T mX;
@@ -23,5 +25,11 @@ public:
         return Point<U>(x, y);
     }
 };
+
+template <typename T>
+void to_json(nlohmann::json& j, const Point<T>& p) {
+    j = nlohmann::json{{"x", p.x()}, {"y", p.y()}};
+}
+
 
 

@@ -5,6 +5,14 @@ language: cpp
 compiler:
   - gcc
 
+notifications:
+  email:
+    recipients:
+      - ravirael@gmail.com
+      - bartopik@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
+
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
   - export CPLUS_INCLUDE_PATH=/usr/local/include

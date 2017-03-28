@@ -9487,7 +9487,7 @@ namespace Catch {
             SectionNode& sectionNode = *m_sectionStack.back();
             sectionNode.assertions.push_back( assertionStats );
             // AssertionResult holds a pointer to a temporary DecomposedExpression,
-            // which getExpandedExpression() calls to build the expression string.
+            // which getExpandedExpression() calls to create the expression string.
             // Our section stack copy of the assertionResult will likely outlive the
             // temporary, so it must be expanded or discarded now to avoid calling
             // a destroyed object later.

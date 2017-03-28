@@ -13,6 +13,10 @@ public:
 
     }
 
+    const ProcessingStage<A, R> &decorated() const {
+        return *mDecorated;
+    };
+
     virtual typename ProcessingStage<A, R>::Result operator()(typename ProcessingStage<A, R>::Argument arg) const override = 0;
 };
 

@@ -27,4 +27,7 @@ public:
     }
 };
 
-
+template <typename T>
+void to_json(nlohmann::json& j, const Circle<T>& circle) {
+    j = nlohmann::json{{"center", circle.center()}, {"radius", circle.radius()}};
+}
