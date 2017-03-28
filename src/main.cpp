@@ -8,29 +8,19 @@
 #include "Detector/DisplayingDecorator.h"
 #include "Detector/DetectionResultRendered.h"
 #include "ProgramArguments/PrintHelpException.h"
+#include "ProgramArguments/ArgumentsAwareOpticDiscDetectorFactory.h"
 
 int main(int argc, char** argv) {
     try {
         const auto options = CommandLineArguments(argc, argv);
-
-        cv::Mat input = cv::imread(options.inputFilePath());
-        std::unique_ptr<OpticDiscDetectorFactory> detectorFactory;
-
-        if (options.debug()) {
-            detectorFactory = std::make_unique<BasicOpticDiscDetectorFactory<DecoratingStageFactory<DisplayingDecorator>>>(
-                    options.houghParametersFactory());
-        } else {
-            detectorFactory = std::make_unique<BasicOpticDiscDetectorFactory<>>(options.houghParametersFactory());
-        }
-
-        const auto result = (*detectorFactory->createDetector())(input);
+        const auto detector = ArgumentsAwareOpticDiscDetectorFactory(options).createDetector();
+        const cv::Mat input = cv::imread(options.inputFilePath());
+        const auto result = (*detector)(input);
+        const auto bestCircle = result->best();
 
         if (options.debug()) {
             DisplayingDecorator(std::make_unique<DetectionResultRendered>(result.get()))(input);
         }
-
-        const auto allCircles = result->all();
-        const auto bestCircle = result->best();
 
         if (bestCircle) {
             std::cout << nlohmann::json(bestCircle.get());
