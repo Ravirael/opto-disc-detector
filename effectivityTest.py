@@ -36,15 +36,23 @@ else:
 
         for row in testData:
             expectedCircle = Circle(row['x'], row['y'], row['radius'])
+            print('Image: {}'.format(row['image']))
             print('Expected:\t{}'.format(expectedCircle))
-            process = Popen(sys.argv[3:] + ["-i", testImagesDirectory + "/" + row['image'] + ".jpg"], stdout=PIPE)
+            process = Popen(sys.argv[3:] + ["-i", testImagesDirectory + "/" + row['image'] + ".jpg",
+                                            "-o", "TestResults/" + row['image'] + ".jpg",
+                                            "--x",str(expectedCircle.x),
+                                            "--y",str(expectedCircle.y),
+                                            "--radius",str(expectedCircle.radius)], stdout=PIPE)
             (output, err) = process.communicate()
             process.wait()
-            js = json.loads(output)
-            detectedCircle = Circle(js['center']['x'], js['center']['y'], js['radius'])
+            stats = json.loads(output)['statistics']
+            circ = json.loads(output)['circle']
+            detectedCircle = Circle(circ['center']['x'], circ['center']['y'], circ['radius'])
             print('Result:  \t{}'.format(detectedCircle))
             print('Diff:    \t{}'.format(detectedCircle - expectedCircle))
-            if detectedCircle.isSimilar(expectedCircle, 100, 50):
+            print('Sensitivity: {}\nSpecificity: {}'.format(stats['sensitivity'], stats['specificity']))
+            print('Accuracy: {}'.format(stats['accuracy']))
+            if stats['sensitivity'] >= 0.75 and stats['specificity'] >= 0.75:#detectedCircle.isSimilar(expectedCircle, 100, 50):
                 print('Correct!')
                 correctDetections += 1
             else:

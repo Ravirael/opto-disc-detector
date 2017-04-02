@@ -12,6 +12,8 @@ public:
     virtual std::unique_ptr<HoughParametersFactory> houghParametersFactory() const = 0;
     virtual boost::optional<Circle<int>> expectedResult() const = 0;
     virtual bool debug() const = 0;
+    virtual double blurSize() const = 0;
+    virtual double blurSigma() const = 0;
     virtual ~ProgramArguments() noexcept;
 };
 

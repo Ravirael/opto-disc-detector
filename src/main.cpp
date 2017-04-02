@@ -9,6 +9,8 @@
 #include "Detector/DetectionResultRendered.h"
 #include "ProgramArguments/PrintHelpException.h"
 #include "ProgramArguments/ArgumentsAwareOpticDiscDetectorFactory.h"
+#include "Detector/Statistics/ConfusionMatrixStatistics.h"
+#include "Detector/Statistics/CircleConfusonMatrix.h"
 
 int main(int argc, char** argv) {
     try {
@@ -22,11 +24,24 @@ int main(int argc, char** argv) {
             DisplayingDecorator(std::make_unique<DetectionResultRendered>(result.get()))(input);
         }
 
+
         if (bestCircle) {
-            std::cout << nlohmann::json(bestCircle.get());
+            nlohmann::json output{{"circle", bestCircle.get()}};
+
+            if (options.expectedResult()) {
+                output["statistics"] = ConfusionMatrixStatistics(std::make_unique<CircleConfusionMatrix>(
+                        options.expectedResult().get(),
+                        bestCircle.get(),
+                        input.cols,
+                        input.rows
+                ));
+            }
+
             if (options.outputFilePath()) {
                 cv::imwrite(options.outputFilePath().get(), DetectionResultRendered(result.get())(input));
             }
+
+            std::cout << output;
             return 0;
         } else {
             std::cout << nlohmann::json::object();

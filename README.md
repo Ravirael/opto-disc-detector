@@ -27,6 +27,9 @@ optic-disc-detector --input=/path/to/input.jpg --output=/path/to/output.jpg
 * **--minDistance** *<double_value>* - minimum distance between centers, % of image width (0 - 1)
 * **--cannyThreshold** *<integer_value>* - upper threshold of Canny filter (0 - 255)
 * **--accumulatorThreshold** *<integer_value>* - accumulator detection threshold ( > 0)
+* **--blurSize** *<double_value>* - blur size, % of image width (0 - 1)
+* **--blurSigma** *<double_value>* - blur sigma ( 0 - 100)
+
 
 ### Optional group
 * **--x** *<integer_value>* - *x* of correct circle center (0 - width)
@@ -48,6 +51,7 @@ Circle is output in JSON format
       "radius":169
    },
    "statistics":{
+      "accuracy":0.95,
       "positive":100,
       "negative":1231,
       "truePositive":60,
