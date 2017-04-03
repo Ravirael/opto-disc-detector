@@ -11,6 +11,6 @@ std::vector<Circle<int>> BasicOpticDiscDetectionResult::all() const {
 
 boost::optional<Circle<int>> BasicOpticDiscDetectionResult::best() const {
     return (mCircles.empty() ?
-            boost::optional<Circle<int>>() :
+            boost::optional<Circle<int>>(Circle<int>(Point<int>(0, 0), 0)) :
             boost::optional<Circle<int>>(mCircles.front()));
 }

@@ -29,6 +29,9 @@ boost::program_options::options_description CommandLineArguments::createOptionsD
             ("minDistance", boost::program_options::value<double>()->default_value(0.14), "Minimum distance, % of image width (0 - 1)")
             ("cannyThreshold", boost::program_options::value<unsigned>()->default_value(80), "Upper threshold of Canny filter (0 - 255)")
             ("accumulatorThreshold", boost::program_options::value<unsigned>()->default_value(4), "Accumulator detection threshold ( > 0)")
+            ("blurSize", boost::program_options::value<double>()->default_value(0.05), "Blur size, % of image width (0 - 1)")
+            ("blurSigma", boost::program_options::value<double>()->default_value(10.0), "Blur sigma (0 - 100)")
+
 
             ("x", boost::program_options::value<unsigned>(), "x of correct circle center (0 - width)")
             ("y", boost::program_options::value<unsigned>(), "y of correct circle center (0 - width)")
@@ -72,4 +75,12 @@ std::unique_ptr<HoughParametersFactory> CommandLineArguments::houghParametersFac
             .setAccumulatorThreshold(mVm["accumulatorThreshold"].as<unsigned>());
 
     return std::move(builder);
+}
+
+double CommandLineArguments::blurSize() const {
+    return mVm["blurSize"].as<double>();
+}
+
+double CommandLineArguments::blurSigma() const {
+    return mVm["blurSigma"].as<double>();
 }
