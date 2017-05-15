@@ -10,7 +10,7 @@
 #include "ProgramArguments/PrintHelpException.h"
 #include "ProgramArguments/ArgumentsAwareOpticDiscDetectorFactory.h"
 #include "Detector/Statistics/ConfusionMatrixStatistics.h"
-#include "Detector/Statistics/CircleConfusonMatrix.h"
+#include "Detector/Statistics/CircleConfusionMatrix.h"
 
 int main(int argc, char** argv) {
     try {
@@ -23,7 +23,6 @@ int main(int argc, char** argv) {
         if (options.debug()) {
             DisplayingDecorator(std::make_unique<DetectionResultRendered>(result.get()))(input);
         }
-
 
         if (bestCircle) {
             nlohmann::json output{{"circle", bestCircle.get()}};
